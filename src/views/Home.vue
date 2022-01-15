@@ -11,11 +11,12 @@
       <div class="separator"></div>
 
       <div class="row">
-        <div class="col-lg-4 col-sm-6 mb-4">
+        <div class="col-lg-4 col-sm-6 mb-4" v-for="(item,index) in listCardData" :key="index">
           <div class="card">
             <div class="card-header bank-fonthead">
               <i class="fa fa-tag"></i>
-              Fate Heaven Feel
+              {{item.Name}}
+              <span class="badge bg-success">Complete</span>
             </div>
             <div class="card-body">
               <div class="row">
@@ -43,6 +44,48 @@
 
 export default {
   name: "Home",
+  data(){
+    return {
+      listCardData : [
+        {
+          Id : 1,
+          Name : `Fate/stay night : Heaven's Feel`,
+          Suscess : true,
+          Img : `heavenfeel.jpg`,
+          Category : `Anime`,
+          Type : [`The Movie`,`BD`],
+          Episode : `3/3`
+        },
+        {
+          Id : 2,
+          Name : `Hitman (Kouji Seo)`,
+          Suscess : false,
+          Img : `Hitman_2.jpg`,
+          Category : `Manga`,
+          Type : [`PDF`],
+          Episode : `18`
+        },
+        {
+          Id : 3,
+          Name : `Brawling Go`,
+          Suscess : true,
+          Img : `Brawling_2.jpg`,
+          Category : `Manhua`,
+          Type : [`PDF`],
+          Episode : `153`
+        },
+        {
+          Id : 4,
+          Name : `The Secret 3P`,
+          Suscess : true,
+          Img : `3P.jpg`,
+          Category : `Manhua`,
+          Type : [`PDF`],
+          Episode : `18`
+        }
+      ]
+    }
+  },
   components: {
   },
 };
