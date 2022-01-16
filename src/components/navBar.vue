@@ -17,10 +17,14 @@
 
       <ul class="nav flex-column bg-white mb-0">
         <li class="nav-item">
-          <a href="/index.html" class="nav-link text-dark bg-light">
+          <!-- <a href="/index.html" class="nav-link text-dark bg-light">
             <i class="fa fa-th-large me-3 fa-fw icon-purple-color"></i>
             Home
-          </a>
+          </a> -->
+          <router-link v-bind:to="'/'" class="nav-link text-dark bg-light">
+            <i class="fa fa-th-large me-3 fa-fw icon-purple-color"></i>
+            Home
+          </router-link>
         </li>
         <li class="nav-item">
           <a
@@ -33,7 +37,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="https://discord.gg/vCFeuEt" class="nav-link text-dark">
+          <a href="https://discord.gg/vCFeuEt" target="_blank" class="nav-link text-dark">
             <i class="fa fa-discord me-3 fa-fw icon-purple-color"></i>
             Discord
           </a>
@@ -83,11 +87,11 @@
 
       <ul class="nav flex-column bg-white mb-0">
         <li class="nav-item">
-          <a href="https://discord.gg/ryKVxXggsg" class="nav-link text-dark">
+          <a href="https://discord.gg/ryKVxXggsg" target="_blank" class="nav-link text-dark">
             <i class="fa fa-discord me-3 fa-fw icon-purple-color"></i>
             Rafasu
           </a>
-          <a href="https://discord.gg/ryKVxXggsg" class="nav-link text-dark">
+          <a href="https://discord.gg/ryKVxXggsg" target="_blank" class="nav-link text-dark">
             <i class="fa fa-facebook-official me-3 fa-fw icon-purple-color"></i>
             Aileen
           </a>
@@ -134,6 +138,9 @@
     }
     .text-gray {
         color: #aaa;
+    }
+    .nav-link:hover{
+      background:#f3f2f2;
     }
     .font-weight-bold {
         font-weight: 700;

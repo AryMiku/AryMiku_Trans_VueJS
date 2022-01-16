@@ -13,20 +13,22 @@
       <div class="row">
         <div class="col-lg-4 col-sm-6 mb-4" v-for="(item,index) in listCardData" :key="index">
           <div class="card">
-            <div class="card-header bank-fonthead">
-              <i class="fa fa-tag"></i>
-              {{item.Name}}
-              <span class="badge bg-success">Complete</span>
+            <div class="card-header font-kanit">
+              <i v-bind:class="[getTagColor(item.Category)]" class="fa fa-tag"></i>
+              <router-link v-bind:to="'/dowload/'+item.Id" class="link-hover"> {{item.Name}} </router-link>
+              <span v-bind:class="[item.Suscess ? 'badge bg-success' : 'badge bg-danger']">
+                {{item.Suscess ? 'Complete' : 'Incoming'}}
+              </span>
             </div>
             <div class="card-body">
               <div class="row">
                 <div class="col-3">
-                  <img src="https://arymikutrans.netlify.app/pic/heavenfeel.jpg" class="pop img-fluid" alt="">
+                  <b-img-lazy :src="item.Img" class="pop img-fluid" alt=""></b-img-lazy>
                 </div>
-                <div class="col-9">
+                <div class="col-9 font-kanit">
                   <p class="card-text">จำนวนตอน : 3</p>
                   <p class="card-text">รูปแบบ : BD [1080P]</p>
-                  <p class="card-text">สถานะ : จบแล้ว</p>
+                  <p v-bind:class="[item.Suscess ? 'color-success' : 'color-incoming']" class="card-text">สถานะ : จบแล้ว</p>
                 </div>
               </div>
             </div>
@@ -42,48 +44,46 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 
+import axios from 'axios'
+import Swal from 'sweetalert2'
+
 export default {
   name: "Home",
+  async mounted(){
+    document.title = 'AryMiku VueJS'
+    Swal.fire({
+      title: 'กำลังโหลดจ้า...',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+    });
+    Swal.showLoading();
+    let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/AryMiku_List.json");
+    this.listCardData = response.data;
+    Swal.close();
+  },
   data(){
     return {
-      listCardData : [
-        {
-          Id : 1,
-          Name : `Fate/stay night : Heaven's Feel`,
-          Suscess : true,
-          Img : `heavenfeel.jpg`,
-          Category : `Anime`,
-          Type : [`The Movie`,`BD`],
-          Episode : `3/3`
-        },
-        {
-          Id : 2,
-          Name : `Hitman (Kouji Seo)`,
-          Suscess : false,
-          Img : `Hitman_2.jpg`,
-          Category : `Manga`,
-          Type : [`PDF`],
-          Episode : `18`
-        },
-        {
-          Id : 3,
-          Name : `Brawling Go`,
-          Suscess : true,
-          Img : `Brawling_2.jpg`,
-          Category : `Manhua`,
-          Type : [`PDF`],
-          Episode : `153`
-        },
-        {
-          Id : 4,
-          Name : `The Secret 3P`,
-          Suscess : true,
-          Img : `3P.jpg`,
-          Category : `Manhua`,
-          Type : [`PDF`],
-          Episode : `18`
+      listCardData : []
+    }
+  },
+  methods:{
+    getTagColor(Category){
+      let classselect = '';
+        switch(Category){
+            case "Anime" :
+                classselect = 'tag-color-anime'
+                break;
+            case "Manga" :
+                classselect = 'tag-color-manga'
+                break;
+            case "Live Action" :
+                classselect = 'tag-color-liveaction'
+                break;
+            case "Manhua" :
+                classselect = 'tag-color-manhua'
+                break;
         }
-      ]
+        return classselect;
     }
   },
   components: {
@@ -91,3 +91,16 @@ export default {
 };
 </script>
 
+<style>
+  .swal2-title {
+    font-family: 'Kanit', sans-serif;
+  }
+  .link-hover {
+    color: black;
+    text-decoration: none;
+  }
+  .link-hover:hover {
+    color: blueviolet;
+    text-decoration: underline;
+  }
+</style>
