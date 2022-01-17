@@ -32,13 +32,13 @@
   @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
 
   .page-content {
-    width: calc(100% - 5rem);
+    width: calc(100% - 2rem);
     margin-right: 5rem;
     transition: all 0.4s;
   }
 
   .page-content-padding {
-    padding-left : 15rem !important;
+    padding-left : 12rem !important;
   }
 
   .separator {

@@ -5,13 +5,13 @@
 
       <div class="form-group has-search">
         <span class="fa fa-search form-control-feedback"></span>
-        <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        <input type="text" class="form-control" placeholder="Search" v-model="searchText">
       </div>
 
       <div class="separator"></div>
 
       <div class="row">
-        <div class="col-lg-4 col-sm-6 mb-4" v-for="(item,index) in listCardData" :key="index">
+        <div class="col-lg-4 col-sm-6 mb-4" v-for="(item,index) in listFilter" :key="index">
           <div class="card">
             <div class="card-header font-kanit">
               <i v-bind:class="[getTagColor(item.Category)]" class="fa fa-tag"></i>
@@ -26,8 +26,8 @@
                   <b-img-lazy :src="item.Img" class="pop img-fluid" alt=""></b-img-lazy>
                 </div>
                 <div class="col-9 font-kanit">
-                  <p class="card-text">จำนวนตอน : 3</p>
-                  <p class="card-text">รูปแบบ : BD [1080P]</p>
+                  <p class="card-text">จำนวนตอน : {{item.Episode}}</p>
+                  <p class="card-text">รูปแบบ : {{item.Category}}</p>
                   <p v-bind:class="[item.Suscess ? 'color-success' : 'color-incoming']" class="card-text">สถานะ : จบแล้ว</p>
                 </div>
               </div>
@@ -63,7 +63,8 @@ export default {
   },
   data(){
     return {
-      listCardData : []
+      listCardData : [],
+      searchText : ''
     }
   },
   methods:{
@@ -88,6 +89,14 @@ export default {
   },
   components: {
   },
+  computed:{
+    listFilter (){
+      let text = this.searchText.trim()
+      return this.listCardData.filter(item =>{
+        return item.Name.indexOf(text) > -1 || item.Category.indexOf(text) > -1
+      })
+    }
+  }
 };
 </script>
 

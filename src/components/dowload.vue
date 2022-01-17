@@ -21,6 +21,10 @@
                         <b> แนวเรื่อง </b> :  แอ็กชั่น , RPG  <hr>
                         <b>สถานะ</b> : <span class="badge badge-success">จบแล้ว</span>
                     </div>
+                    <div>
+                        <!-- {{this.listdata}} -->
+                        <data-table v-bind="bindings"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,15 +33,37 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+
 export default {
   name: 'dowload',
   data(){
       return{
-          id: this.$route.params.id
+          id: this.$route.params.id,
+          listdata : [] //รอค่าจาก mount
       }
   },
-  created(){
+  computed:{
+      bindings() {
+          return {
+              data : this.listdata,
+              columns : [
+                  {
+                      key : "EP",
+                      Name : "EP"
+                  }
+              ]
+          }
+      }
+  },
+  created(){ //เกิดหลังจาก Build Components เสร็จแล้ว
       console.log(this.id)
+  },
+  async mounted(){ //เปิดมาก็จัดเลย
+    let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/11.json");
+    this.listdata = response.data.Download
+
   }
 }
 </script>
