@@ -30,6 +30,7 @@
 <style>
 
   @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@500&display=swap');
 
   .page-content {
     width: calc(100% - 2rem);
@@ -48,6 +49,10 @@
 
   .font-kanit{
     font-family: 'Kanit', sans-serif;
+  }
+
+  .font-sarabun{
+    font-family: 'Sarabun', sans-serif;
   }
 
   .color-success{

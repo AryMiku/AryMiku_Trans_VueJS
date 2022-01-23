@@ -1,33 +1,59 @@
 <template>
   <div class="dowload">
     <div class="page-content page-content-padding mrt" id="content">
-        <div class="container">
+        <!-- <div class="container"> -->
             <div class="container">
                 <div class="row">
                     <div class="col-sm">
-                        <center><img src="https://sv1.picz.in.th/images/2022/01/16/nQIdlR.jpg" style="width: 100%; max-width: 350px;" ></center>
+                        <center><img v-bind:src="data.Img" style="width: 100%; max-width: 350px;" ></center>
                     </div>
-                    <div class="col-sm">
-                        <b>ชื่อเรื่อง</b> : Sword Art Online Alicization <hr>
-                        <b>รูปแบบ</b> : [TH][BD][1080P] <hr> 
-                        <b>จำนวนตอน</b> : 24 ตอน <hr> 
-                        <b>เนื้อเรื่องย่อ</b> : สิงหาคม 2026 คิริโตะ รับงานเป็นผู้ทดสอบระบบ FullDive รุ่นที่ 4 Soul Translator 
-                        ซึ่งทำให้เขาไปอยู่ในโลกเสมือน Underworld ที่เวลาเดินเร็วกว่าโลกความเป็นจริง 1,000 เท่า เขาได้ใช้ชีวิตในนั้นตั้งแต่เด็ก 
-                        จนใช้เวลาร่วม 11 ปี แต่ความทรงจำเหตุการณ์ต่างๆ กลับถูกผนึกไว้หลังกลับสู่โลกเดิม 
-                        จนวันหนึ่ง คิริโตะบาดเจ็บสาหัสจาก Johnny Black (อดีตสมาชิกของ Death Gun ที่รอดอยู่) ต่อหน้าอาสึนะ 
-                        ผลจากยาฉีดเข้าร่าง ทำให้เขาหยุดหายใจ แม้จะช่วยทำให้หัวใจเต้นอีกครั้ง แต่เกิดความเสียหายทางสมองจากขาดอ๊อกซิเจนเป็นเวลานาน 
-                        คิริโตะอยู่ในอาการโคม่าไม่ได้สติ มีกลุ่มคนที่ใช้อุปกรณ์ Soul Translators พาเขาไปรักษา ซึ่งทำให้เขาได้ความทรงจำเดิมในโลก 
-                        Underworld กลับไปผจญภัยในโลกนั้น จนกว่าจะมีหนทางพาเขากลับมาโลกเดิมได้ <hr> 
+                    <div class="col-sm font-sarabun">
+                        <b>ชื่อเรื่อง</b> : {{data.Name}} <hr>
+                        <b>รูปแบบ</b> : <span v-for="(value,key) in data.Type" :key="key">[{{value}}] </span> <hr> 
+                        <b>จำนวนตอน</b> : {{data.Episode}} <hr> 
+                        <b>เนื้อเรื่องย่อ</b> : {{data.ShortStory}} <hr> 
                         <b> แนวเรื่อง </b> :  แอ็กชั่น , RPG  <hr>
-                        <b>สถานะ</b> : <span class="badge badge-success">จบแล้ว</span>
-                    </div>
-                    <div>
-                        <!-- {{this.listdata}} -->
-                        <data-table v-bind="bindings"/>
+                        <b>สถานะ</b> : <span class="badge bg-success">จบแล้ว</span>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <div>
+                            Serch : <b-form-input
+                                id="filter-input"
+                                v-model="filter"
+                                type="search"
+                                placeholder="Type to Search"
+                                class="mb-2"
+                            ></b-form-input>
+                            <b-table :fields="fields" :items="listdata" :current-page="currentPage" :per-page="perPage" :filter="filter" show-empty hover class="table table-bordered font-sarabun">
+                                <template #cell(name)="data">
+                                    <b>{{data.item.Name}}</b>
+                                </template>
+                                <template #cell(fileowner)="data">
+                                    <b>{{data.item.FileOwner}}</b>
+                                </template>
+                                <template #cell(link)="data">
+                                    <b-dropdown size="sm" variant="outline-primary" right text="Dowload">
+                                        <b-dropdown-item v-for="(value,key) in data.item.DownloadLink" :key="key" v-bind:href="value.Link" target="_blank">
+                                            {{value.Name}}
+                                        </b-dropdown-item>
+                                    </b-dropdown>
+                                </template>
+                                <template #cell(status)="data">
+                                    <span class="badge bg-success">{{data.item.Status == true ? 'สถานะสมบูรณ์' : 'ไฟล์เสียหาย'}}</span>
+                                </template>
+                            </b-table>
+                            <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"></b-pagination>
+                            <b-badge variant="success">Success</b-badge>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
     </div>
   </div>
 </template>
@@ -35,25 +61,31 @@
 <script>
 
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default {
   name: 'dowload',
   data(){
       return{
           id: this.$route.params.id,
-          listdata : [] //รอค่าจาก mount
+          listdata : [], //รอค่าจาก mount
+          data : {Img:null},
+          fields : [
+              {key:'name',label:'Anime Name'},
+              {key:'fileowner',label:'ผู้จัดทำ',class: 'text-center hide-column'},
+              {key:'link', label:'Link',class: 'text-center'},
+              {key:'status',label:'status',class: 'text-center hide-column'}
+          ],
+          currentPage: 1,
+          totalRows: 1,
+          perPage: 5,
+          filter: null
       }
   },
   computed:{
       bindings() {
           return {
-              data : this.listdata,
-              columns : [
-                  {
-                      key : "EP",
-                      Name : "EP"
-                  }
-              ]
+              data : this.listdata
           }
       }
   },
@@ -61,9 +93,33 @@ export default {
       console.log(this.id)
   },
   async mounted(){ //เปิดมาก็จัดเลย
-    let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/11.json");
-    this.listdata = response.data.Download
-
+    let response = null
+    try{
+        Swal.fire({
+            title: 'กำลังโหลดจ้า...',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+        });
+        Swal.showLoading();
+        response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/${this.id}.json`);
+        this.listdata = response.data.Download
+        this.data = response.data
+        //set number of item
+        this.totalRows = response.data.Download.length
+        Swal.close();
+    } catch(err){
+        console.log(err)
+        // alert('Id นี้ไม่มีอยู่จริง')
+        Swal.fire({
+                title: 'หน้านี้ไม่มีข้อมูลกำลังกลับหน้าหลัก',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                timer: 2000,
+        }).then(() => {
+            this.$router.push({name: 'Home'})
+        });
+        Swal.showLoading();
+    }
   }
 }
 </script>
@@ -71,5 +127,10 @@ export default {
 <style>
     .mrt {
         margin-top: 2rem;
+    }
+    @media screen and (max-width: 975px) {
+        .hide-column {
+            display: none;
+        }
     }
 </style>
