@@ -61,6 +61,12 @@
             DarkZone
           </a>
         </li>
+        <li class="nav-item">
+          <router-link v-bind:to="'/echhi'" class="nav-link text-dark bg-light">
+            <i class="fa fa-file me-3 fa-fw icon-purple-color"></i>
+            EcchiZone
+          </router-link>
+        </li>
         <!-- <li class="nav-item">
       <a href="#" class="nav-link text-dark">
                 <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>

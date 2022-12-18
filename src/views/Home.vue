@@ -3,9 +3,27 @@
     <div class="page-content page-content-padding" id="content">
       <h2 class="display-4 mb-4">AryMiku</h2>
 
-      <div class="form-group has-search">
-        <span class="fa fa-search form-control-feedback"></span>
-        <input type="text" class="form-control" placeholder="Search" v-model="searchText">
+      <div class="row">
+        <div class="form-group has-search col-10">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input type="text" class="form-control" placeholder="Search" v-model="searchText">
+        </div>
+        <div class="col-2">
+          <b-button v-b-toggle.collapse-1 variant="primary">Advance Search</b-button>
+        </div>
+      </div>
+
+      <div>
+          <b-collapse id="collapse-1" class="mt-2">
+            <b-card>
+              Group
+              <select class="form-control form-control-sm" @change="groupbytype(sortType)" v-model="sortType">
+                <option value="">All</option>
+                <option value="Anime">Anime</option>
+                <option value="Manga">Manga</option>
+              </select>
+            </b-card>
+          </b-collapse>
       </div>
 
       <div class="separator"></div>
@@ -46,6 +64,7 @@
 
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import {BButton,BCard,BCollapse,VBToggle} from 'bootstrap-vue'
 
 export default {
   name: "Home",
@@ -64,7 +83,13 @@ export default {
   data(){
     return {
       listCardData : [],
-      searchText : ''
+      selected: [],
+      searchText : '',
+      optionGroup : [
+        {text:'Anime',value:'Anime'},
+        {text:'Manga',value:'Mange'}
+      ],
+      sortType:''
     }
   },
   methods:{
@@ -85,17 +110,28 @@ export default {
                 break;
         }
         return classselect;
+    },
+    groupbytype(item){
+      console.log('test' + item);
+      console.log(this.listCardData);
     }
   },
   components: {
+    BButton,
+    BCard,
+    BCollapse
   },
   computed:{
     listFilter (){
       let text = this.searchText.trim()
+      let type = this.sortType.trim()
       return this.listCardData.filter(item =>{
-        return item.Name.indexOf(text) > -1 || item.Category.indexOf(text) > -1
+        return (item.Name.indexOf(text) > -1 || item.Category.indexOf(text) > -1) && item.Category.indexOf(type) > -1
       })
     }
+  },
+  directives:{
+    'b-toggle':VBToggle
   }
 };
 </script>

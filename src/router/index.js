@@ -22,6 +22,11 @@ const routes = [
     path: '/dowload/:id',
     name: 'Dowload',
     component: () => import('../components/dowload.vue')
+  },
+  {
+    path: '/echhi',
+    name: 'Echhi',
+    component:() => import('../components/ecchi.vue')
   }
 ]
 
