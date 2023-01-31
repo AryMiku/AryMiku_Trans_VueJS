@@ -56,10 +56,10 @@
 
       <ul class="nav flex-column bg-white mb-0">
         <li class="nav-item">
-          <a href="/secret/index2.html" class="nav-link text-dark">
+          <router-link v-bind:to="'/secret'" class="nav-link text-dark bg-light">
             <i class="fa fa-lock me-3 fa-fw icon-purple-color"></i>
             DarkZone
-          </a>
+          </router-link>
         </li>
         <li class="nav-item">
           <router-link v-bind:to="'/echhi'" class="nav-link text-dark bg-light">

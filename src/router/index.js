@@ -27,6 +27,16 @@ const routes = [
     path: '/echhi',
     name: 'Echhi',
     component:() => import('../components/ecchi.vue')
+  },
+  {
+    path: '/secret',
+    name:'Secret',
+    component:()=>import('../components/secret.vue')
+  },
+  {
+    path: '/secret_dowload/:id',
+    name:'Secret_Dowload',
+    component:()=>import('../components/secret_dowload.vue')
   }
 ]
 
