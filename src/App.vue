@@ -6,7 +6,9 @@
     </div> -->
 
     <!-- ###### SideBar ##### -->
-    <navBar></navBar>
+    <!-- <navBar></navBar> -->
+
+    <narBar2></narBar2>
 
     <!-- ###### Main Show ##### -->
     <router-view/>
@@ -17,12 +19,14 @@
 
 <script>
 
-  import navBar from '@/components/navBar.vue'
+  // import navBar from '@/components/navBar.vue'
+  import narBar2 from '@/components/navBar2.vue'
 
   export default {
     name: "app",
     components: {
-      navBar
+      // navBar,
+      narBar2
     }
   }
 </script>
@@ -33,13 +37,14 @@
   @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@500&display=swap');
 
   .page-content {
-    width: calc(100% - 2rem);
-    margin-right: 5rem;
+    width: calc(100% - 5rem);
+    margin-right: 10rem;
+    /* margin-left: 5rem; */
     transition: all 0.4s;
   }
 
   .page-content-padding {
-    padding-left : 12rem !important;
+    padding-left : 5rem !important;
   }
 
   .separator {

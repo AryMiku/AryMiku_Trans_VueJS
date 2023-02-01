@@ -1,11 +1,14 @@
 <template>
   <div class="Home">
     <div class="page-content page-content-padding" id="content">
-      <h2 class="display-4 mb-4">AryMiku</h2>
+      <div class="display-4 mb-4 mt-4 mx-5">
+        <img src="https://media.tenor.com/Bsc24Fia060AAAAC/anime-banner.gif" 
+          style="width: 80%;height:200px" class="center-block"
+        alt="">
+      </div>
 
       <div class="row">
         <div class="form-group has-search col-10">
-          <span class="fa fa-search form-control-feedback"></span>
           <input type="text" class="form-control" placeholder="Search" v-model="searchText">
         </div>
         <div class="col-2">
