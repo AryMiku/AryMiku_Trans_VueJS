@@ -1,9 +1,8 @@
 <template>
   <div class="Home">
     <div class="page-content page-content-padding" id="content">
-      <h2 class="display-4 mb-4">AryMiku</h2>
-
-      <div class="row">
+      
+      <div class="row pt-5">
         <div class="form-group has-search col-10">
           <span class="fa fa-search form-control-feedback"></span>
           <input type="text" class="form-control" placeholder="Search" v-model="searchText">
@@ -41,7 +40,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-3">
-                  <b-img-lazy :src="item.Picture" class="pop img-fluid" alt=""></b-img-lazy>
+                  <b-img-lazy :src="item.Img" class="pop img-fluid" alt=""></b-img-lazy>
                 </div>
                 <div class="col-9 font-kanit">
                   <p class="card-text">จำนวนตอน : {{item.Episode}}</p>
@@ -76,7 +75,8 @@ export default {
       allowOutsideClick: false,
     });
     Swal.showLoading();
-    let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/API_DowloadAnother.json");
+    // let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/API_DowloadAnother.json");
+    let response = await axios.get("https://api.arymiku.com/select/Select_Home_List.php?typeid=0");
     this.listCardData = response.data;
     Swal.close();
   },
@@ -148,4 +148,5 @@ export default {
     color: blueviolet;
     text-decoration: underline;
   }
+  
 </style>

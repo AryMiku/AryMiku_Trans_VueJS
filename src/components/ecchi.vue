@@ -21,12 +21,10 @@
                                 <b>{{data.item.Name}}</b>
                             </template>
                             <template #cell(link)="data">
-                                <span class="badge bg-success">{{data.item.Status == true ? 'สถานะสมบูรณ์' : 'ไฟล์เสียหาย'}}</span>
+                                <span :class="[data.item.Suscess ? 'badge bg-success' : 'badge bg-error']">{{data.item.Suscess == true ? 'สถานะสมบูรณ์' : 'ไฟล์เสียหาย'}}</span>
                             </template>
                             <template #cell(status)="data">
-                                <!-- <span class="badge bg-warning" @click="openPictuce(data.item.Id)">ดูรูปภาพ</span> -->
-                                <span class="badge bg-warning" @click="$bvModal.show('modal-1');IdModal=data.item.Id;">ดูรูปภาพ</span>
-                                <!-- <b-button v-b-modal.modal-1>ดูรูปภาพ</b-button> -->
+                                <span class="badge bg-warning" @click="OpenModalValue(data.item.Id);">ดูรูปภาพ</span>
                             </template>
                         </b-table>
                         <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"></b-pagination>
@@ -38,14 +36,14 @@
         <!-- </div> -->
     </div>
     <!-- model -->
-    <b-modal id="modal-1" size="xl" title="BootstrapVue">
+    <b-modal id="modal-1" ref="modal-1" size="xl" :title="listdata_modal.Name">
         <div class="container">
             <div class="row">
                 <div class="col-1">
                     <span class="badge bg-warning" style="float:left;" @click="ShowPic=!ShowPic">ซ่อน/โชว์ รูปภาพ</span>
                 </div>
                 <div class="col-5">
-                    <img src="https://usercontent.2th.me/a/i/rt3jw5rn/2th.me_3272039.jpg" style="width:25rem;height:35rem;" v-if="ShowPic"/>
+                    <img v-bind:src="listdata_modal.Img" style="width:80%" v-if="ShowPic"/>
                 </div>
                 <div class="col-6">
                     <table class="table">
@@ -53,11 +51,19 @@
                         <th> Name </th>
                         <th> Link </th>
                     </tr>
-                    <tr>
-                        <th> Final </th>
-                        <th><a href="#">Test</a></th>
-                    </tr>
-                </table>
+                        <tr v-for="(item ,index) in listdata_modal.Download" v-bind:key="index">
+                            <th> {{item.Name}} </th>
+                            <th>
+                                <!-- <a href="#">Test</a> -->
+                                <!-- <b-dropdown-item v-for="(value,key) in item.DownloadLink" :key="key" v-bind:href="value.Link" target="_blank">
+                                    {{value.Name}}
+                                </b-dropdown-item> -->
+                                <b-dropdown text="Dowload">
+                                    <b-dropdown-item v-bind:href="dw.Link" target="_blank" v-for="(dw,index) in item.DownloadLink" v-bind:key="index">{{dw.Name}}</b-dropdown-item>
+                                </b-dropdown>
+                            </th>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
@@ -92,7 +98,8 @@ export default {
           perPage: 5,
           filter: null,
           IdModal:null,
-          ShowPic:true
+          ShowPic:true,
+          listdata_modal : {}
       }
   },
   methods:{
@@ -126,6 +133,13 @@ export default {
             cancelButtonAriaLabel: 'Thumbs down',
             width:'1020px'
         })
+    },
+    async OpenModalValue(Id){
+        // $bvModal.show('modal-1');
+        let response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${Id}`);
+        console.log(Id);
+        this.listdata_modal = response.data;
+        this.$refs['modal-1'].show();
     }
   },
   computed:{
@@ -147,7 +161,8 @@ export default {
             allowOutsideClick: false,
         });
         Swal.showLoading();
-        response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/AryMiku_List_Ecchi.json`);
+        // response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/AryMiku_List_Ecchi.json`);
+        response = await axios.get(`https://api.arymiku.com/select/Select_Home_List.php?typeid=2`);
         this.listdata = response.data
         this.data = response.data
         //set number of item
@@ -176,6 +191,11 @@ export default {
     }
     .swal-height {
         height: 80vh;
+    }
+    .close{
+        background-color: transparent;
+        border: 0;
+        font-size: 1.5rem;
     }
     @media screen and (max-width: 975px) {
         .hide-column {

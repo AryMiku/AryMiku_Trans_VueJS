@@ -5,14 +5,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm">
-                        <center><img v-bind:src="data.Picture" style="width: 100%; max-width: 350px;" ></center>
+                        <center><img v-bind:src="data.Img" style="width: 100%; max-width: 350px;" ></center>
                     </div>
                     <div class="col-sm font-sarabun">
                         <b>ชื่อเรื่อง</b> : {{data.Name}} <hr>
                         <!-- <b>รูปแบบ</b> : <span v-for="(value,key) in data.Type" :key="key">[{{value}}] </span> <hr>  -->
                         <b>รูปแบบ</b> : [{{data.Type}}] <hr>
                         <b>จำนวนตอน</b> : {{data.Chapter}} <hr> 
-                        <b>เนื้อเรื่องย่อ</b> : {{data.Description}} <hr> 
+                        <b>เนื้อเรื่องย่อ</b> : {{data.ShortStory}} <hr> 
                         <b> แนวเรื่อง </b> :  แอ็กชั่น , RPG  <hr>
                         <b>สถานะ</b> : <span class="badge bg-success">จบแล้ว</span>
                     </div>
@@ -32,14 +32,14 @@
                             ></b-form-input>
                             <b-table :fields="fields" :items="listdata" :current-page="currentPage" :per-page="perPage" :filter="filter" show-empty hover class="table table-bordered font-sarabun">
                                 <template #cell(name)="data">
-                                    <b>{{data.item.EP}}</b>
+                                    <b>{{data.item.Name}}</b>
                                 </template>
                                 <template #cell(fileowner)>
-                                    <b><a v-bind:href="data.Trans.Link" target="_blank">{{data.Trans.Trans}}</a></b>
+                                    <b><a v-bind:href="data.Trans.Link" target="_blank">{{data.Trans.Name}}</a></b>
                                 </template>
                                 <template #cell(link)="data">
                                     <b-dropdown size="sm" variant="outline-primary" right text="Dowload">
-                                        <b-dropdown-item v-for="(value,key) in data.item.Dowload" :key="key" v-bind:href="value.Link" target="_blank">
+                                        <b-dropdown-item v-for="(value,key) in data.item.DownloadLink" :key="key" v-bind:href="value.Link" target="_blank">
                                             {{value.Name}}
                                         </b-dropdown-item>
                                     </b-dropdown>
@@ -102,11 +102,15 @@ export default {
             allowOutsideClick: false,
         });
         Swal.showLoading();
-        response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/${this.id}.json`);
+        // response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/${this.id}.json`);
+        response = await axios.get(`https:api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}`);
         this.listdata = response.data.Download
         this.data = response.data
         //set number of item
         this.totalRows = response.data.Download.length
+        if(this.totalRows < 20){
+            this.perPage = 20;
+        }
         Swal.close();
     } catch(err){
         console.log(err)

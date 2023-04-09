@@ -1,14 +1,15 @@
 <template>
   <div class="Home">
     <div class="page-content page-content-padding" id="content">
-      <div class="display-4 mb-4 mt-4 mx-5">
+      <!-- <div class="display-4 mb-4 mt-4 mx-5">
         <img src="https://media.tenor.com/Bsc24Fia060AAAAC/anime-banner.gif" 
           style="width: 80%;height:200px" class="center-block"
         alt="">
-      </div>
+      </div> -->
 
-      <div class="row">
+      <div class="row pt-5">
         <div class="form-group has-search col-10">
+          <span class="fa fa-search form-control-feedback"></span>
           <input type="text" class="form-control" placeholder="Search" v-model="searchText">
         </div>
         <div class="col-2">
@@ -79,7 +80,8 @@ export default {
       allowOutsideClick: false,
     });
     Swal.showLoading();
-    let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/AryMiku_List.json");
+    //let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/AryMiku_List.json");
+    let response = await axios.get("https://api.arymiku.com/select/Select_Home_List.php?typeid=1");
     this.listCardData = response.data;
     Swal.close();
   },
@@ -150,5 +152,20 @@ export default {
   .link-hover:hover {
     color: blueviolet;
     text-decoration: underline;
+  }
+
+  .has-search .form-control {
+    padding-left: 2.375rem;
+  }
+  .has-search .form-control-feedback {
+      position: absolute;
+      z-index: 2;
+      display: block;
+      width: 2.375rem;
+      height: 2.375rem;
+      line-height: 2.375rem;
+      text-align: center;
+      pointer-events: none;
+      color: #aaa;
   }
 </style>
