@@ -13,7 +13,8 @@
           <input type="text" class="form-control" placeholder="Search" v-model="searchText">
         </div>
         <div class="col-2">
-          <b-button v-b-toggle.collapse-1 variant="primary">Advance Search</b-button>
+          <!-- <b-button v-b-toggle.collapse-1 variant="primary">Advance Search</b-button> -->
+          <b-button @click="notReady()" variant="primary">Advance Search</b-button>
         </div>
       </div>
 
@@ -119,6 +120,12 @@ export default {
     groupbytype(item){
       console.log('test' + item);
       console.log(this.listCardData);
+    },
+    notReady(){
+      Swal.fire({
+        icon: 'error',
+        title: 'ยังไม่พร้อมใช้ตอนนี้จ้า'
+      });
     }
   },
   components: {

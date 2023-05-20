@@ -22,6 +22,20 @@
                 <div class="row">
                     <div class="col-sm">
                         <div>
+                            <b-form-group label="เลือก Mode ที่ต้องการจะใช้งาน" v-slot="{ ariaDescribedby }" class="mt-2 font-sarabun" v-if="data.Have_Dowload">
+                                <b-form-radio-group
+                                    id="radio-group-1"
+                                    v-model="checkdowloadselect"
+                                    :options="checkDowload"
+                                    :aria-describedby="ariaDescribedby"
+                                    button-variant="outline-primary"
+                                    name="radio-options"
+                                    class="mb-2 inline-flex"
+                                    buttons
+                                    @change="checkFunction()"
+                                ></b-form-radio-group>
+                            </b-form-group>
+                            
                             Serch : <b-form-input
                                 id="filter-input"
                                 v-model="filter"
@@ -79,8 +93,15 @@ export default {
           currentPage: 1,
           totalRows: 1,
           perPage: 5,
-          filter: null
+          filter: null,
+          checkdowloadselect : 'Read',
+          checkDowload : ['Dowload','Read']
       }
+  },
+  methods:{
+    checkFunction: function(){
+        alert(this.checkdowloadselect);
+    }
   },
   computed:{
       bindings() {
@@ -102,7 +123,7 @@ export default {
         });
         Swal.showLoading();
         // response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/${this.id}.json`);
-        response = await axios.get(`https:api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}`);
+        response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}`);
         this.listdata = response.data.Download
         this.data = response.data
         //set number of item
@@ -128,6 +149,15 @@ export default {
 <style>
     .mrt {
         margin-top: 2rem;
+    }
+    .inline-flex{
+        display: inline-flex;
+    }
+    .custom-radio{
+        margin-left: 1rem;
+    }
+    .custom-control-label{
+        margin-left: 0.5rem;
     }
     @media screen and (max-width: 975px) {
         .hide-column {
