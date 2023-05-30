@@ -20,14 +20,20 @@
             </li>
             <li class="nav-item px-5">
               <router-link v-bind:to="'/secret'" class="nav-link text-dark bg-light">
-                <i class="fa fa-lock  fa-fw icon-purple-color"></i>
-                  DarkZone
+                <i class="fa fa-file  fa-fw icon-purple-color"></i>
+                  My Following
               </router-link>
             </li>
             <li class="nav-item px-5">
               <router-link v-bind:to="'/echhi'" class="nav-link text-dark bg-light">
                 <i class="fa fa-file  fa-fw icon-purple-color"></i>
                   Ecchi
+              </router-link>
+            </li>
+            <li class="nav-item px-5">
+              <router-link v-bind:to="'/darkzone'" class="nav-link text-dark bg-light">
+                <i class="fa fa-lock  fa-fw icon-purple-color"></i>
+                  Secret
               </router-link>
             </li>
             <li class="nav-item px-5 dropdown">

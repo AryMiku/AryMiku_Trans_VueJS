@@ -22,6 +22,9 @@
                 <div class="row">
                     <div class="col-sm">
                         <div>
+                            
+                            <div class="alert alert-primary mt-3 mb-2 font-sarabun" v-if="data.Special_Text"> Note : {{data.Special_Text}} </div>
+
                             <b-form-group label="เลือก Mode ที่ต้องการจะใช้งาน" v-slot="{ ariaDescribedby }" class="mt-2 font-sarabun" v-if="data.Have_Dowload">
                                 <b-form-radio-group
                                     id="radio-group-1"
@@ -51,7 +54,7 @@
                                     <b>{{data.item.FileOwner}}</b>
                                 </template>
                                 <template #cell(link)="data">
-                                    <b-dropdown size="sm" variant="outline-primary" right text="Dowload">
+                                    <b-dropdown size="sm" variant="outline-primary" right text="Link">
                                         <b-dropdown-item v-for="(value,key) in data.item.DownloadLink" :key="key" v-bind:href="value.Link" target="_blank">
                                             {{value.Name}}
                                         </b-dropdown-item>
@@ -158,6 +161,9 @@ export default {
     }
     .custom-control-label{
         margin-left: 0.5rem;
+    }
+    .alert{
+        padding: 0.5rem 0.5rem;
     }
     @media screen and (max-width: 975px) {
         .hide-column {

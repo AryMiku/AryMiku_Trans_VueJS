@@ -38,14 +38,14 @@
                                     <b><a v-bind:href="data.Trans.Link" target="_blank">{{data.Trans.Name}}</a></b>
                                 </template>
                                 <template #cell(link)="data">
-                                    <b-dropdown size="sm" variant="outline-primary" right text="Dowload">
+                                    <b-dropdown size="sm" variant="outline-primary" right text="Link">
                                         <b-dropdown-item v-for="(value,key) in data.item.DownloadLink" :key="key" v-bind:href="value.Link" target="_blank">
                                             {{value.Name}}
                                         </b-dropdown-item>
                                     </b-dropdown>
                                 </template>
                                 <template #cell(status)="data">
-                                    <span class="badge bg-success">{{data.item.Status == true ? 'สถานะสมบูรณ์' : 'ไฟล์เสียหาย'}}</span>
+                                    <span class="badge bg-success">{{data.item.Status == true ? 'สถานะสมบูรณ์' : 'สถานะสมบูรณ์'}}</span>
                                 </template>
                             </b-table>
                             <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"></b-pagination>

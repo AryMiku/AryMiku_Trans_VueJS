@@ -37,6 +37,11 @@ const routes = [
     path: '/secret_dowload/:id',
     name:'Secret_Dowload',
     component:()=>import('../components/secret_dowload.vue')
+  },
+  {
+    path: '/darkzone',
+    name: 'Darkzone',
+    component:()=>import('../components/darkzone.vue')
   }
 ]
 
