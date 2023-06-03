@@ -36,15 +36,30 @@
   @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@500&display=swap');
 
-  .page-content {
-    width: calc(100% - 5rem);
-    margin-right: 10rem;
-    /* margin-left: 5rem; */
-    transition: all 0.4s;
+  @media screen and (min-width:400px) {
+    .page-content {
+      width: calc(100% - 3rem);
+      margin-right: 10rem;
+      /* margin-left: 5rem; */
+      transition: all 0.4s;
+    }
+
+    .page-content-padding {
+      padding-left : 3rem !important;
+    }
   }
 
-  .page-content-padding {
-    padding-left : 5rem !important;
+  @media screen and (min-width:800px) {
+    .page-content {
+      width: calc(100% - 5rem);
+      margin-right: 10rem;
+      /* margin-left: 5rem; */
+      transition: all 0.4s;
+    }
+
+    .page-content-padding {
+      padding-left : 5rem !important;
+    }
   }
 
   .separator {

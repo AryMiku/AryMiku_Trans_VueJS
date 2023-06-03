@@ -18,7 +18,7 @@
                                 <b>{{data.item.Category}}</b>
                             </template>
                             <template #cell(fileowner)="data">
-                                <b>{{data.item.Name}}</b>
+                                <span @click="OpenModalValue(data.item.Id);"><b>{{data.item.Name}}</b></span>
                             </template>
                             <template #cell(link)="data">
                                 <span :class="[data.item.Suscess ? 'badge bg-success' : 'badge bg-error']">{{data.item.Suscess == true ? 'สถานะสมบูรณ์' : 'ไฟล์เสียหาย'}}</span>
@@ -89,8 +89,8 @@ export default {
           data : {Img:null},
           fields : [
               {key:'name',label:'หมวดหมู่'},
-              {key:'fileowner',label:'ชื่อ',class: 'text-center hide-column'},
-              {key:'link', label:'Status',class: 'text-center'},
+              {key:'fileowner',label:'ชื่อ',class: 'text-center'},
+              {key:'link', label:'Status',class: 'text-center hide-column'},
               {key:'status',label:'รูปภาพ',class: 'text-center hide-column'}
           ],
           currentPage: 1,

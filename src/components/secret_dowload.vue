@@ -10,11 +10,11 @@
                     <div class="col-sm font-sarabun">
                         <b>ชื่อเรื่อง</b> : {{data.Name}} <hr>
                         <!-- <b>รูปแบบ</b> : <span v-for="(value,key) in data.Type" :key="key">[{{value}}] </span> <hr>  -->
-                        <b>รูปแบบ</b> : [{{data.Type}}] <hr>
-                        <b>จำนวนตอน</b> : {{data.Chapter}} <hr> 
+                        <b>รูปแบบ</b> : {{data.Category}} <hr>
+                        <b>จำนวนตอน</b> : {{data.Episode}} <hr> 
                         <b>เนื้อเรื่องย่อ</b> : {{data.ShortStory}} <hr> 
-                        <b> แนวเรื่อง </b> :  แอ็กชั่น , RPG  <hr>
-                        <b>สถานะ</b> : <span class="badge bg-success">จบแล้ว</span>
+                        <b> แนวเรื่อง </b> :  <span v-for="(value,key) in data.Type" :key="key" class="badge bg-primary me-2">{{value}} </span>  <hr>
+                        <b>สถานะ</b> : <span :class="[data.Suscess ? 'badge bg-success' : 'badge bg-danger']">{{data.Suscess ? 'จบแล้ว' : 'ยังไม่จบ'}}</span>
                     </div>
                 </div>
             </div>
@@ -39,13 +39,13 @@
                                 </template>
                                 <template #cell(link)="data">
                                     <b-dropdown size="sm" variant="outline-primary" right text="Link">
-                                        <b-dropdown-item v-for="(value,key) in data.item.DownloadLink" :key="key" v-bind:href="value.Link" target="_blank">
+                                        <b-dropdown-item v-for="(value,key) in data.item.DownloadLink" :key="key" :disabled="false" v-bind:href="value.Link" target="_blank">
                                             {{value.Name}}
                                         </b-dropdown-item>
                                     </b-dropdown>
                                 </template>
                                 <template #cell(status)="data">
-                                    <span class="badge bg-success">{{data.item.Status == true ? 'สถานะสมบูรณ์' : 'สถานะสมบูรณ์'}}</span>
+                                    <span :class="BadgeStatus(data.item.Status)">{{NameShowStatus(data.item.Status)}}</span>
                                 </template>
                             </b-table>
                             <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"></b-pagination>
@@ -82,6 +82,34 @@ export default {
           perPage: 5,
           filter: null
       }
+  },
+  methods: {
+    NameShowStatus(status){
+        let text = '';
+        if(status == '1'){
+            text = "สถานะสมบูรณ์"
+        }
+        else if(status == '2'){
+            text = "ไฟล์เสียหาย"
+        }
+        else if(status == '3'){
+            text = "มีลิงค์ที่เสียหาย"
+        }
+        return text;
+    },
+    BadgeStatus(statue){
+        let badge = '';
+        if(statue == '1'){
+            badge = "badge bg-success"
+        }
+        else if(statue == '2'){
+            badge = "badge bg-danger"
+        }
+        else if(statue == '3'){
+            badge = "badge bg-warning text-dark"
+        }
+        return badge;
+    }
   },
   computed:{
       bindings() {
@@ -137,5 +165,8 @@ export default {
         .hide-column {
             display: none;
         }
+    }
+    .redtext{
+        color: red;
     }
 </style>

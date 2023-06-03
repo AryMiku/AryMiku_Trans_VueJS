@@ -3,12 +3,9 @@
     <div class="page-content page-content-padding" id="content">
       
       <div class="row pt-5">
-        <div class="form-group has-search col-10">
+        <div class="form-group has-search col-12">
           <span class="fa fa-search form-control-feedback"></span>
           <input type="text" class="form-control" placeholder="Search" v-model="searchText">
-        </div>
-        <div class="col-2">
-          <b-button v-b-toggle.collapse-1 variant="primary">Advance Search</b-button>
         </div>
       </div>
 
@@ -32,7 +29,7 @@
           <div class="card">
             <div class="card-header font-kanit">
               <i v-bind:class="[getTagColor(item.Category)]" class="fa fa-tag"></i>
-              <router-link v-bind:to="'/secret_dowload/'+item.Id" class="link-hover"> {{item.Name}} </router-link>
+              <router-link v-bind:to="'/secret_dowload/'+item.Id" class="link-hover" :title="item.Name"> {{shortName(item.Name)}} </router-link>
               <span v-bind:class="[item.Suscess ? 'badge bg-success' : 'badge bg-danger']">
                 {{item.Suscess ? 'Complete' : 'Incoming'}}
               </span>
@@ -63,7 +60,7 @@
 
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import {BButton,BCard,BCollapse,VBToggle} from 'bootstrap-vue'
+import {BCard,BCollapse,VBToggle} from 'bootstrap-vue'
 
 export default {
   name: "Home",
@@ -114,10 +111,12 @@ export default {
     groupbytype(item){
       console.log('test' + item);
       console.log(this.listCardData);
+    },
+    shortName(name){
+      return name.length > 20 ? `${name.slice(0,35)}...` : name;
     }
   },
   components: {
-    BButton,
     BCard,
     BCollapse
   },

@@ -5,7 +5,6 @@
       <!-- <img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"> -->
       AryMiku
     </a>
-      <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -62,7 +61,6 @@
             </li>
           </ul>
         </div>
-      </div>
     </nav>
 </div>
   

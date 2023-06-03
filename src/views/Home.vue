@@ -8,13 +8,9 @@
       </div> -->
 
       <div class="row pt-5">
-        <div class="form-group has-search col-10">
+        <div class="form-group has-search col-12">
           <span class="fa fa-search form-control-feedback"></span>
           <input type="text" class="form-control" placeholder="Search" v-model="searchText">
-        </div>
-        <div class="col-2">
-          <!-- <b-button v-b-toggle.collapse-1 variant="primary">Advance Search</b-button> -->
-          <b-button @click="notReady()" variant="primary">Advance Search</b-button>
         </div>
       </div>
 
@@ -69,7 +65,7 @@
 
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import {BButton,BCard,BCollapse,VBToggle} from 'bootstrap-vue'
+import {BCard,BCollapse,VBToggle} from 'bootstrap-vue'
 
 export default {
   name: "Home",
@@ -120,16 +116,9 @@ export default {
     groupbytype(item){
       console.log('test' + item);
       console.log(this.listCardData);
-    },
-    notReady(){
-      Swal.fire({
-        icon: 'error',
-        title: 'ยังไม่พร้อมใช้ตอนนี้จ้า'
-      });
     }
   },
   components: {
-    BButton,
     BCard,
     BCollapse
   },
