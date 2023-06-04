@@ -7,7 +7,7 @@
                     <div class="col-sm">
                         <center><img v-bind:src="data.Img" style="width: 100%; max-width: 350px;" ></center>
                     </div>
-                    <div class="col-sm font-sarabun">
+                    <div class="col-sm font-sarabun lmt">
                         <b>ชื่อเรื่อง</b> : {{data.Name}} <hr>
                         <b>รูปแบบ</b> : {{data.Category}} <hr> 
                         <b>จำนวนตอน</b> : {{data.Episode}} <hr> 
@@ -48,7 +48,7 @@
                             ></b-form-input>
                             <b-table :fields="fields" :items="filteredItems" :current-page="currentPage" :per-page="perPage" show-empty hover class="table table-bordered font-sarabun">
                                 <template #cell(name)="data">
-                                    <b>{{data.item.Name}}</b>
+                                    <b @click="ShowDowload(data.item)">{{data.item.Name}}</b>
                                 </template>
                                 <template #cell(fileowner)="data">
                                     <b>{{data.item.FileOwner}}</b>
@@ -90,7 +90,7 @@ export default {
           fields : [
               {key:'name',label:'Anime Name'},
               {key:'fileowner',label:'ผู้จัดทำ',class: 'text-center hide-column'},
-              {key:'link', label:'Link',class: 'text-center'},
+              {key:'link', label:'Link',class: 'text-center hide-column'},
               {key:'status',label:'Status',class: 'text-center hide-column'}
           ],
           currentPage: 1,
@@ -130,6 +130,17 @@ export default {
             badge = "badge bg-warning text-dark"
         }
         return badge;
+    },
+    ShowDowload(item){
+        let row = '';
+        item.DownloadLink.forEach(element => {
+            row += `<a href="${element.Link}" class="hideunderline" target="_blank"><button type="button" class="btn btn-outline-primary m-1">${element.Name}</a></button>`
+        });
+        Swal.fire({
+            title : 'Dowload',
+            icon : 'info',
+            html : row
+        })
     }
   },
   computed:{
@@ -202,9 +213,15 @@ export default {
     .alert{
         padding: 0.5rem 0.5rem;
     }
+    .hideunderline {
+        text-decoration: none;
+    }
     @media screen and (max-width: 975px) {
         .hide-column {
             display: none;
+        }
+        .lmt{
+            margin-top: 1rem;
         }
     }
 </style>

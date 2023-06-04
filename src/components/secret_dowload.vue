@@ -7,7 +7,7 @@
                     <div class="col-sm">
                         <center><img v-bind:src="data.Img" style="width: 100%; max-width: 350px;" ></center>
                     </div>
-                    <div class="col-sm font-sarabun">
+                    <div class="col-sm font-sarabun lmt">
                         <b>ชื่อเรื่อง</b> : {{data.Name}} <hr>
                         <!-- <b>รูปแบบ</b> : <span v-for="(value,key) in data.Type" :key="key">[{{value}}] </span> <hr>  -->
                         <b>รูปแบบ</b> : {{data.Category}} <hr>
@@ -32,7 +32,7 @@
                             ></b-form-input>
                             <b-table :fields="fields" :items="filteredItems" :current-page="currentPage" :per-page="perPage" :filter="filter" show-empty hover class="table table-bordered font-sarabun">
                                 <template #cell(name)="data">
-                                    <b>{{data.item.Name}}</b>
+                                    <b @click="ShowDowload(data.item)">{{data.item.Name}}</b>
                                 </template>
                                 <template #cell(fileowner)>
                                     <b><a v-bind:href="data.Trans.Link" target="_blank">{{data.Trans.Name}}</a></b>
@@ -109,6 +109,17 @@ export default {
             badge = "badge bg-warning text-dark"
         }
         return badge;
+    },
+    ShowDowload(item){
+        let row = '';
+        item.DownloadLink.forEach(element => {
+            row += `<a href="${element.Link}" class="hideunderline" target="_blank"><button type="button" class="btn btn-outline-primary m-1">${element.Name}</a></button>`
+        });
+        Swal.fire({
+            title : 'Dowload',
+            icon : 'info',
+            html : row
+        })
     }
   },
   computed:{
@@ -175,6 +186,9 @@ export default {
     @media screen and (max-width: 975px) {
         .hide-column {
             display: none;
+        }
+        .lmt{
+            margin-top: 1rem;
         }
     }
     .redtext{
