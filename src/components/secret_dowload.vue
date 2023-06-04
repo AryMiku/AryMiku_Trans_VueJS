@@ -30,7 +30,7 @@
                                 placeholder="Type to Search"
                                 class="mb-2"
                             ></b-form-input>
-                            <b-table :fields="fields" :items="listdata" :current-page="currentPage" :per-page="perPage" :filter="filter" show-empty hover class="table table-bordered font-sarabun">
+                            <b-table :fields="fields" :items="filteredItems" :current-page="currentPage" :per-page="perPage" :filter="filter" show-empty hover class="table table-bordered font-sarabun">
                                 <template #cell(name)="data">
                                     <b>{{data.item.Name}}</b>
                                 </template>
@@ -48,7 +48,7 @@
                                     <span :class="BadgeStatus(data.item.Status)">{{NameShowStatus(data.item.Status)}}</span>
                                 </template>
                             </b-table>
-                            <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"></b-pagination>
+                            <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage" class="mb-4"></b-pagination>
                             <b-badge variant="success">Success</b-badge>
                         </div>
                     </div>
@@ -116,6 +116,16 @@ export default {
           return {
               data : this.listdata
           }
+      },
+      filteredItems(){
+        if (this.filter) {
+            return this.listdata.filter(item =>
+            item.Name.toLowerCase().includes(this.filter.toLowerCase())
+        );
+        }
+        else {
+            return this.listdata;
+        }
       }
   },
   created(){ //เกิดหลังจาก Build Components เสร็จแล้ว
@@ -134,6 +144,7 @@ export default {
         response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}`);
         this.listdata = response.data.Download
         this.data = response.data
+        document.title = response.data.Name
         //set number of item
         this.totalRows = response.data.Download.length
         if(this.totalRows < 20){
