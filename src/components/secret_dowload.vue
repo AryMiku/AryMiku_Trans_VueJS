@@ -155,7 +155,7 @@ export default {
         });
         Swal.showLoading();
         // response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/${this.id}.json`);
-        response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}`);
+        response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}&isDowload=0`);
         this.listdata = response.data.Download
         this.data = response.data
         document.title = response.data.Name

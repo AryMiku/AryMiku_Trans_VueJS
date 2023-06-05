@@ -136,7 +136,7 @@ export default {
     },
     async OpenModalValue(Id){
         // $bvModal.show('modal-1');
-        let response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${Id}`);
+        let response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${Id}&isDowload=0`);
         console.log(Id);
         this.listdata_modal = response.data;
         this.$refs['modal-1'].show();

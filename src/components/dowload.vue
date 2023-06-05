@@ -104,6 +104,12 @@ export default {
   methods:{
     checkFunction: function(){
         alert(this.checkdowloadselect);
+        if(this.checkdowloadselect == 'Read'){
+            this.ChangeModeDowload(0)
+        }
+        else{
+            this.ChangeModeDowload(1)
+        }
     },
     NameShowStatus(status){
         let text = '';
@@ -141,6 +147,37 @@ export default {
             icon : 'info',
             html : row
         })
+    },
+    async ChangeModeDowload(isDowload){
+        let response = null
+        try{
+            Swal.fire({
+                title: 'กำลังโหลดจ้า...',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            });
+            Swal.showLoading();
+            // response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/${this.id}.json`);
+            response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}&isDowload=${isDowload}`);
+            this.listdata = response.data.Download
+            this.data = response.data
+            document.title = response.data.Name
+            //set number of item
+            this.totalRows = response.data.Download.length;
+            Swal.close();
+        } catch(err){
+            console.log(err)
+            // alert('Id นี้ไม่มีอยู่จริง')
+            Swal.fire({
+                    title: 'หน้านี้ไม่มีข้อมูลกำลังกลับหน้าหลัก',
+                    showConfirmButton: false,
+                    allowOutsideClick: false,
+                    timer: 2000,
+            }).then(() => {
+                this.$router.push({name: 'Home'})
+            });
+            Swal.showLoading();
+        }
     }
   },
   computed:{
@@ -173,7 +210,7 @@ export default {
         });
         Swal.showLoading();
         // response = await axios.get(`https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/AryMiku_List/${this.id}.json`);
-        response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}`);
+        response = await axios.get(`https://api.arymiku.com/select/Select_Home_Dowload.php?id=${this.id}&isDowload=0`);
         this.listdata = response.data.Download
         this.data = response.data
         document.title = response.data.Name
