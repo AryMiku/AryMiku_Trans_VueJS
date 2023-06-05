@@ -111,9 +111,12 @@ export default {
         return badge;
     },
     ShowDowload(item){
-        let row = '';
+        let row = `<div class="mb-2">${item.Name}</div>`;
         item.DownloadLink.forEach(element => {
-            row += `<a href="${element.Link}" class="hideunderline" target="_blank"><button type="button" class="btn btn-outline-primary m-1">${element.Name}</a></button>`
+            row += `
+                <a href="${element.Link}" class="hideunderline" target="_blank">
+                    <button type="button" class="btn btn-outline-primary m-1">${element.Name}</button>
+                </a>`
         });
         Swal.fire({
             title : 'Dowload',
