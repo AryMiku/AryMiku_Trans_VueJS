@@ -47,7 +47,7 @@
                 <div class="col-9 font-kanit">
                   <p class="card-text">จำนวนตอน : {{item.Episode}}</p>
                   <p class="card-text">รูปแบบ : {{item.Category}}</p>
-                  <p v-bind:class="[item.Suscess ? 'color-success' : 'color-incoming']" class="card-text">สถานะ : จบแล้ว</p>
+                  <p v-bind:class="[item.Suscess ? 'color-success' : 'color-incoming']" class="card-text">สถานะ : {{item.Success ? 'จบแล้ว' : 'ยังไม่จบ'}}</p>
                 </div>
               </div>
             </div>
