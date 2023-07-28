@@ -1,16 +1,51 @@
 <template>
   <div class="Home">
     <div class="page-content page-content-padding font-kanit" id="content">
-        <!-- <div class="fs-1 d-flex justify-content-center">
-          <div class="row color-tomato">
-            ขี้เกียจทำ ดองไว้ก่อนนะ
-          </div> 
-        </div>  -->
-        <div class="bank-flex-container">
-          <div class="bank-row">
-            <span class="bank-flex-item">ขี้เกียจทำ ดองไว้ก่อนนะ </span>
-          </div>
+        <!-- <div class="container"> -->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <div>
+                        Serch : <b-form-input
+                            id="filter-input"
+                            v-model="filter"
+                            type="search"
+                            placeholder="Type to Search"
+                            class="mb-2"
+                        ></b-form-input>
+                        <b-table :fields="fields" :items="listdata" :current-page="currentPage" :per-page="perPage" :filter="filter" show-empty hover class="table table-bordered font-sarabun">
+                            <template #cell(name)="data">
+                                <b>{{data.item.Name}}</b>
+                            </template>
+                            <template #cell(Category_Name)="data">
+                                <b>{{data.item.Category_Name}}</b>
+                            </template>
+                            <template #cell(Chapter)="data">
+                                <b>{{data.item.Chapter}}</b>
+                            </template>
+                            <template #cell(Languagejson)="data">
+                                <span v-for="(value,key) in data.item.Languagejson" :key="key">
+                                    <img v-bind:src="getflagicon(value)" class="me-2">
+                                </span>
+                            </template>
+                            <template #cell(Subtitlejson)="data">
+                                <span v-for="(value,key) in data.item.Subtitlejson" :key="key">
+                                    <img v-bind:src="getflagicon(value)" class="me-2">
+                                </span>
+                            </template>
+                            <template #cell(Backupjson)="data">
+                                <span v-for="(value,key) in data.item.Backupjson" :key="key">
+                                    <img v-bind:src="getflagicon(value)" class="me-2">
+                                </span>
+                            </template>
+                        </b-table>
+                        <b-pagination v-model="currentPage" :total-rows="totalRows" :per-page="perPage"></b-pagination>
+                        <b-badge variant="success">Success</b-badge>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- </div> -->
     </div>
   </div>
 </template>
@@ -33,20 +68,55 @@ export default {
     });
     Swal.showLoading();
     // let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/API_DowloadAnother.json");
-    let response = await axios.get("https://api.arymiku.com/select/Select_Home_List.php?typeid=0");
-    this.listCardData = response.data;
+    let response = await axios.get("https://api.arymiku.com/select/Select_List_MyItem.php");
+    response.data.forEach(element => {
+      element.Languagejson = JSON.parse(element.Language);
+      element.Subtitlejson = JSON.parse(element.Subtitle);
+      element.Backupjson = JSON.parse(element.Backup);
+    });
+    this.listdata = response.data;
     Swal.close();
   },
   data(){
     return {
-      listCardData : [],
+      currentPage: 1,
+      totalRows: 1,
+      perPage: 20,
+      filter: null,
+      listdata : [],
+      fields : [
+              {key:'name',label:'ชื่อ'},
+              {key:'Category_Name',label:'หมวดหมู่',class: 'text-center'},
+              {key:'Chapter',label:'จำนวนตอน',class: 'text-center hide-column'},
+              {key:'Languagejson',label:'ภาษา',class: 'text-center hide-column'},
+              {key:'Subtitlejson',label:'คำบรรยาย',class: 'text-center hide-column'},
+              {key:'Backupjson',label:'ที่จัดเก็บ',class: 'text-center hide-column'}
+      ],
       selected: [],
       searchText : '',
-      optionGroup : [
-        {text:'Anime',value:'Anime'},
-        {text:'Manga',value:'Mange'}
-      ],
       sortType:''
+    }
+  },
+  methods:{
+    getflagicon(value){
+      let item = '';
+      switch(value) {
+        case 'TH':
+          item = require("../assets/th.png")
+          break;
+        case 'JP':
+          item = require("../assets/jp.png")
+          break;
+        case 'BOX':
+          item = require("../assets/box.png")
+          break;
+        case 'NAS':
+          item = require("../assets/nas.png")
+          break;
+        default:
+          item = ''
+      }
+      return item
     }
   }
 };

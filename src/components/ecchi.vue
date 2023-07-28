@@ -95,7 +95,7 @@ export default {
           ],
           currentPage: 1,
           totalRows: 1,
-          perPage: 5,
+          perPage: 20,
           filter: null,
           IdModal:null,
           ShowPic:true,
