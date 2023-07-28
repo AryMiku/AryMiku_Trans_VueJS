@@ -70,8 +70,8 @@ export default {
     // let response = await axios.get("https://raw.githubusercontent.com/AryMiku/API_AryMiku/master/API_DowloadAnother.json");
     let response = await axios.get("https://api.arymiku.com/select/Select_List_MyItem.php");
     response.data.forEach(element => {
-      element.Languagejson = JSON.parse(element.Language);
-      element.Subtitlejson = JSON.parse(element.Subtitle);
+      element.Languagejson = element.Language == '' ? '' : JSON.parse(element.Language);
+      element.Subtitlejson = element.Subtitle == '' ? '' : JSON.parse(element.Subtitle);
       element.Backupjson = JSON.parse(element.Backup);
     });
     this.listdata = response.data;
@@ -106,6 +106,9 @@ export default {
           break;
         case 'JP':
           item = require("../assets/jp.png")
+          break;
+        case 'EN':
+          item = require("../assets/en.png")
           break;
         case 'BOX':
           item = require("../assets/box.png")
