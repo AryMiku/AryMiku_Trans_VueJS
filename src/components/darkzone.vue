@@ -116,6 +116,9 @@ export default {
         case 'NAS':
           item = require("../assets/nas.png")
           break;
+        case 'TERABOX' :
+          item = require("../assets/tera.png")
+          break;
         default:
           item = ''
       }
