@@ -75,13 +75,14 @@ export default {
       element.Backupjson = JSON.parse(element.Backup);
     });
     this.listdata = response.data;
+    this.totalRows = response.data.length;
     Swal.close();
   },
   data(){
     return {
       currentPage: 1,
-      totalRows: 1,
-      perPage: 20,
+      totalRows: 0, /*ไปกำหนดค่าจำนวนหน้าตอนได้ list item แล้ว*/
+      perPage: 20, 
       filter: null,
       listdata : [],
       fields : [
